@@ -8,18 +8,10 @@
   </head>
   <body>
     <div style="min-height:100vh;display:grid;place-items:center;font:16px system-ui;color:#202124;background:#f7f3ed;">题库加载中...</div>
-    <script src="./payload-000.js"></script>
-    <script src="./payload-001.js"></script>
-    <script src="./payload-002.js"></script>
-    <script src="./payload-003.js"></script>
-    <script src="./payload-004.js"></script>
-    <script src="./payload-005.js"></script>
-    <script src="./payload-006.js"></script>
-    <script src="./payload-007.js"></script>
-    <script src="./payload-008.js"></script>
-    <script src="./payload-009.js"></script>
-    <script src="./payload-010.js"></script>
-    <script src="./payload-011.js"></script>
+    <script src="./site-000.js?v=20260602b"></script>
+    <script src="./site-001.js?v=20260602b"></script>
+    <script src="./site-002.js?v=20260602b"></script>
+    <script src="./site-003.js?v=20260602b"></script>
     <script>
 (() => {
   function decodeBase64(value) {
@@ -31,7 +23,8 @@
 
   async function unpack() {
     if (!("DecompressionStream" in window)) throw new Error("当前浏览器不支持题库解压，请换用最新版 Chrome、Edge 或 Safari。");
-    const stream = new Blob([decodeBase64(window.SITE_PACKED || "")]).stream().pipeThrough(new DecompressionStream("gzip"));
+    const packed = (window.SITE_PACKED || "").replace("Di8Bl1OjwDi8Bl1Ojw1/v9OYP", "Di8Bl1Ojw1/v9OYP");
+    const stream = new Blob([decodeBase64(packed)]).stream().pipeThrough(new DecompressionStream("gzip"));
     return JSON.parse(await new Response(stream).text());
   }
 
