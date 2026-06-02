@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>习近平新时代中国特色社会主义思想学习刷题站</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <div style="min-height:100vh;display:grid;place-items:center;font:16px system-ui;color:#202124;background:#f7f3ed;">题库加载中...</div>
+    <script src="./payload-000.js"></script>
+    <script src="./payload-001.js"></script>
+    <script src="./payload-002.js"></script>
+    <script src="./payload-003.js"></script>
+    <script src="./payload-004.js"></script>
+    <script src="./payload-005.js"></script>
+    <script src="./payload-006.js"></script>
+    <script src="./payload-007.js"></script>
+    <script src="./payload-008.js"></script>
+    <script src="./payload-009.js"></script>
+    <script src="./payload-010.js"></script>
+    <script src="./payload-011.js"></script>
+    <script>
+(() => {
+  function decodeBase64(value) {
+    const binary = atob(value);
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+    return bytes;
+  }
+
+  async function unpack() {
+    if (!("DecompressionStream" in window)) throw new Error("当前浏览器不支持题库解压，请换用最新版 Chrome、Edge 或 Safari。");
+    const stream = new Blob([decodeBase64(window.SITE_PACKED || "")]).stream().pipeThrough(new DecompressionStream("gzip"));
+    return JSON.parse(await new Response(stream).text());
+  }
+
+  unpack().then((site) => {
+    const style = document.createElement("style");
+    style.textContent = site.css;
+    document.head.append(style);
+    document.body.innerHTML = site.body;
+    window.STUDY_DATA = site.data;
+    (0, eval)(site.app);
+  }).catch((error) => {
+    console.error(error);
+    document.body.innerHTML = '<div style="padding:32px;font:16px system-ui;color:#7f1d1d;">题库加载失败，请刷新页面或换用最新版浏览器。</div>';
+  });
+})();
+    </script>
+  </body>
+</html>
